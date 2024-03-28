@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Your Website</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: "Arial", sans-serif;
+			background-color: #f4f4f4;
+			transition: background-color 0.3s;
+		}
+
+		header {
+			backdrop-filter: blur(10px);
+			background-color: #2c3e50;
+			color: white;
+			padding: 10px 0;
+			position: fixed;
+			width: 100%;
+			top: 0;
+			z-index: 1000;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+			transition: background-color 0.3s;
+		}
+
+		header:hover {
+			background-color: #34495e;
+		}
+
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+
+		nav h1 {
+			margin: 0;
+			color: #4caf50;
+			font-size: 1.8em;
+		}
+
+		nav ul {
+			list-style: none;
+			background-color: #2c3e50;
+			border-radius: 10px;
+			display: flex;
+			flex-wrap: wrap;
+			float: left;
+
+
+			justify-content: center;
+			/* Center the content horizontally */
+			align-items: center;
+			/* Center the content vertically */
+		}
+
+		nav li {
+			margin: 0 15px 5px 0;
+			position: relative;
+			transition: transform 0.3s ease;
+		}
+
+		nav li:hover {
+			transform: scale(1.1);
+		}
+
+		nav a {
+			text-decoration: none;
+			color: white;
+			font-size: 14px;
+			font-weight: bold;
+			transition: color 0.3s;
+			border-bottom: 2px solid transparent;
+			padding-bottom: 5px;
+		}
+
+		nav a {
+			/* Your regular styles for the link */
+			color: #fff;
+			text-decoration: none;
+			border-bottom: 4 px solid transparent;
+
+			transition: border-bottom 0.3s ease;
+			/* Adding transition for a smooth effect */
+		}
+
+		nav a:hover {
+			animation: borderAnimation 1s infinite;
+			/* Run the animation infinitely on hover */
+		}
+
+		@keyframes borderAnimation {
+			0% {
+				border-bottom: 2px solid transparent;
+				/* Start with a transparent border */
+			}
+
+			50% {
+				border-bottom: 2px solid #07d60e;
+				/* Change to your desired color at 50% of the animation */
+			}
+
+			100% {
+				border-bottom: 2px solid transparent;
+				/* End with a transparent border again */
+			}
+		}
+
+		.dropdown {
+			display: none;
+			position: absolute;
+			flex-direction: row-reverse;
+			top: 100%;
+			left: 0;
+			margin: 10px;
+			background-color: #f0f0f0;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+			opacity: 0;
+			transform: translateY(-10px);
+			transition: opacity 0.5s, transform 0.5s;
+			z-index: 1000;
+			width: 300px;
+			max-height: 300px;
+			overflow-y: auto;
+			border-radius: 5px;
+		}
+
+		.dropdown-toggle::after,
+		summary::after {
+			content: "\25BE";
+			display: inline-block;
+			font-size: 12px;
+			margin-left: 3px;
+			transition: transform 0s;
+		}
+
+		nav li.active .dropdown-toggle::after,
+		details[open] summary::after {
+			content: "\25B4";
+			transition: transform 0s;
+		}
+
+		nav li.active {
+			position: relative;
+			z-index: 1000;
+		}
+
+		.dropdown a {
+			color: #6c757d;
+			padding: 10px;
+			display: block;
+			text-decoration: none;
+			transition: background-color 0.3s, color 0.3s;
+		}
+
+		.dropdown a:hover {
+			background-color: #4caf50;
+			color: white;
+		}
+
+		nav li.active .dropdown {
+			display: block;
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		main {
+			margin-top: 60px;
+			padding: 20px;
+			background-color: white;
+			border-radius: 10px;
+			box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+			transition: box-shadow 0.3s;
+		}
+
+		main:hover {
+			box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+		}
+
+		.menu-btn {
+			display: none;
+			cursor: pointer;
+			font-size: 20px;
+			color: white;
+			transition: transform 0.3s ease;
+		}
+
+		.menu-btn:hover,
+		summary:hover {
+			color: #4caf50;
+		}
+
+		summary {
+			list-style-type: none;
+			color: #6c757d;
+			padding: 10px;
+			font-weight: bold;
+			text-decoration: none;
+			transition: background-color 0.3s, color 0.3s;
+		}
+
+		details[open] summary {
+			color: #4caf50;
+			transition: background-color 0.3s, color 0.3s;
+		}
+
+		.details-tag-div {
+			background-color: #34495e;
+			/*margin-left: 70px;  Add margin to the left when details tag is open */
+		}
+
+		/* Customizing the scrollbar */
+		::-webkit-scrollbar {
+			width: 2px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background-color: #4caf50;
+			/* Color of the scrollbar thumb */
+			border-radius: 3px;
+		}
+
+		::-webkit-scrollbar-track {
+			background-color: #f0f0f0;
+			/* Color of the scrollbar track */
+		}
+
+		@media screen and (max-width: 768px) {
+			.menu-btn {
+				display: block;
+			}
+
+			nav ul {
+				display: none;
+				flex-direction: column;
+				flex-wrap: nowrap;
+				position: absolute;
+				top: 30px;
+				left: 0;
+				width: 100%;
+				background-color: #2c3e50;
+				box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+				z-index: 1000;
+				overflow-y: auto;
+				border-radius: 5px;
+			}
+
+			nav ul.active {
+				display: flex;
+			}
+
+			nav li {
+				margin: 5px 0;
+				width: 100%;
+				position: relative;
+			}
+
+			nav li.active .dropdown {
+				position: relative;
+				width: 90%;
+				top: 0;
+				left: 0;
+				margin-top: 10px;
+			}
+
+			.menu-btn.active {
+				transform: rotate(180deg);
+			}
+
+			nav li:hover {
+				transform: scale(1);
+			}
+			.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  h1 {
+    color: #333;
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+
+  p {
+    color: #666;
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .student-img {
+    max-width: 100%;
+    height: auto;
+    animation: float 5s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+		}
+	</style>
+</head>
+<!--
+<body>
+	<header>
+		<nav>
+			<div class="menu-btn">&#9776;</div>
+			<ul>
+				<li><a href="#">Home</a></li>
+
+				<li>
+					<a href="#" class="dropdown-toggle">About</a>
+					<div class="dropdown">
+						<a href="#">Accreditations</a>
+						<a href="#">Campus</a>
+						<a href="#">Governance</a>
+						<details class="dropdown-detail-tag">
+							<summary>Administration</summary>
+							<div class="details-tag-div">
+								<a href="#">Hierarchy</a>
+								<a href="#">Office Staff</a>
+							</div>
+						</details>
+						<a href="#">Principal's Desk</a>
+						<a href="#">MOUs</a>
+						<a href="#">Infrastructure</a>
+						<a href="#">II Shift Polytechnic</a>
+					</div>
+				</li>
+
+				<li>
+					<a href="#" class="dropdown-toggle">Academics</a>
+					<div class="dropdown">
+						<a href="#">Autonomous</a>
+						<a href="#">Recognised Ph.D Supervisors</a>
+						<a href="#">Institutional Distinctiveness</a>
+						<a href="#">Academic Calenders</a>
+						<details class="dropdown-detail-tag">
+							<summary>Admissions</summary>
+							<div class="details-tag-div">
+								<a href="#">A Category</a>
+								<a href="#">B Category</a>
+								<a href="#">Fee Structure</a>
+							</div>
+						</details>
+						<a href="#">Cources Offered</a>
+						<a href="#">CO-PO Mapping</a>
+						<a href="#">Rules & Regulations</a>
+						<a href="#">AICTE 360 Feedback</a>
+					</div>
+				</li>
+
+				<li>
+					<a href="#" class="dropdown-toggle">Departments</a>
+					<div class="dropdown">
+						<details class="dropdown-detail-tag">
+							<summary>Engineering Departments</summary>
+							<div class="details-tag-div">
+								<a href="#">Civil Engineering</a>
+								<a href="#">Cyber Security</a>
+								<a href="#">Computer Science & Engineering</a>
+								<a href="#">CSE-AI & ML</a>
+								<a href="#">Data Science</a>
+								<a href="#">Electronics & Communication Engineering</a>
+								<a href="#">Electrical & Electronics Engineering</a>
+								<a href="#">Electronics & Instrumentation Engineering</a>
+								<a href="#">Information Technology</a>
+								<a href="#">Mechanical Engineering</a>
+							</div>
+						</details>
+						<details class="dropdown-detail-tag">
+							<summary>Science & Humanities</summary>
+							<div class="details-tag-div">
+								<a href="#">Maths</a>
+								<a href="#">Physics</a>
+								<a href="#">Chemistry</a>
+								<a href="#">English</a>
+								<a href="#">MCA</a>
+							</div>
+						</details>
+					</div>
+				</li>
+
+				<li>
+					<a href="#">Placements Cell</a>
+				</li>
+
+				<li>
+					<a href="#">R & D</a>
+				</li>
+
+				<li>
+					<a href="#" class="dropdown-toggle">Examination Cell</a>
+					<div class="dropdown">
+						<a href="#">COE Office</a>
+						<a href="#">Examination Timetables</a>
+						<a href="#">Exam Circulars</a>
+						<a href="#">Results</a>
+						<details class="dropdown-detail-tag">
+							<summary>Student Marks</summary>
+							<div class="details-tag-div">
+								<a href="#">R20 Regulation</a>
+								<a href="#">R18 Regulation</a>
+								<a href="#">R14 & R10 Regulations</a>
+							</div>
+						</details>
+						<a href="#">Education Verification</a>
+						<a href="#">Application Forms</a>
+						<a href="#">Scripts Distribution</a>
+					</div>
+				</li>
+
+				<li>
+					<a href="#" class="dropdown-toggle">Statuary Data</a>
+					<div class="dropdown">
+						<details class="dropdown-detail-tag">
+							<summary>AICTE</summary>
+							<div class="details-tag-div">
+								<a href="#">AICTE Mandatory Disclosure</a>
+								<a href="#">AICTE EOAs</a>
+								<a href="#">Undertakings</a>
+							</div>
+						</details>
+						<a href="#">BOS</a>
+						<a href="#">IQAC</a>
+						<a href="#">Internal Complaints committee</a>
+						<a href="#">Anti Ragging Committee</a>
+						<a href="#">Sc/ST Committee</a>
+						<a href="#">OBE Committee</a>
+						<a href="#">RTI</a>
+					</div>
+				</li>
+
+				<li>
+					<a href="#" class="dropdown-toggle">Student Activities</a>
+					<div class="dropdown">
+						<a href="#">NCC</a>
+						<a href="#">NSS</a>
+						<a href="#">CCA</a>
+						<a href="#">Awaaz</a>
+					</div>
+				</li>
+
+				<li><a href="#">NAAC</a></li>
+				<li><a href="#">NBA</a></li>
+				<li><a href="#">NIRF</a></li>
+				<li><a href="#">IIC</a></li>
+
+
+
+
+
+
+
+
+
+
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<h2>Welcome to Your Website</h2>
+	</main>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var menuBtn = document.querySelector(".menu-btn");
+			var navList = document.querySelector("nav ul");
+
+			menuBtn.addEventListener("click", function () {
+				navList.classList.toggle("active");
+				menuBtn.classList.toggle("active");
+			});
+
+			var dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+			dropdownToggles.forEach(function (toggle) {
+				toggle.addEventListener("click", function (event) {
+					event.preventDefault();
+					var parentLi = this.parentNode;
+					var isActive = parentLi.classList.contains("active");
+
+					// Close all details tags
+					closeAllDetails();
+
+					closeAllDropdowns();
+
+					if (!isActive) {
+						parentLi.classList.add("active");
+						toggle.style.color = "green"; // Set color to red when dropdown is active
+					} else {
+						toggle.style.color = ""; // Set color to normal when dropdown is closed
+					}
+				});
+			});
+
+			document.addEventListener("click", function (event) {
+				if (!event.target.closest("nav")) {
+					closeAllDetails();
+					closeAllDropdowns();
+				}
+			});
+
+			function closeAllDetails() {
+				var allDetailsTags = document.querySelectorAll("details[open]");
+				allDetailsTags.forEach(function (detailsTag) {
+					detailsTag.removeAttribute("open");
+				});
+			}
+
+			function closeAllDropdowns() {
+				dropdownToggles.forEach(function (toggle) {
+					var parentLi = toggle.parentNode;
+					parentLi.classList.remove("active");
+					toggle.style.color = ""; // Set color to normal when dropdown is closed
+				});
+			}
+
+			var detailsTags = document.querySelectorAll("details");
+			detailsTags.forEach(function (detailsTag) {
+				detailsTag.addEventListener("toggle", function () {
+					if (detailsTag.open) {
+						closeOtherDetails(detailsTag);
+					}
+				});
+			});
+
+			function closeOtherDetails(currentDetails) {
+				detailsTags.forEach(function (detailsTag) {
+					if (detailsTag !== currentDetails && detailsTag.open) {
+						detailsTag.removeAttribute("open");
+					}
+				});
+			}
+		});
+	</script>
+</body>-->
+
+<body>
+	<header>
+		<nav>
+			<div class="menu-btn">&#9776;</div>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="getAllStudents">Students</a></li>
+				<li><a href="getAllFaculty">Faculty</a></li>
+				<li><a href="test">Track Students</a></li>
+
+				<li>
+					<a href="#" class="dropdown-toggle">Admin</a>
+					<div class="dropdown">
+						<a href="getALLStudentsForAdmin">Student Section</a>
+						<a href="getAllFacultyForAdmin">Faculty Section</a>
+
+
+
+
+
+					</div>
+				</li>
+
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<div class="container">
+  <h1>Welcome to Our Student Management System</h1>
+  <p>Efficiently manage your students' records and academic data.</p>
+</div>
+	</main>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var menuBtn = document.querySelector(".menu-btn");
+			var navList = document.querySelector("nav ul");
+
+			menuBtn.addEventListener("click", function () {
+				navList.classList.toggle("active");
+				menuBtn.classList.toggle("active");
+			});
+
+			var dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+			dropdownToggles.forEach(function (toggle) {
+				toggle.addEventListener("click", function (event) {
+					event.preventDefault();
+					var parentLi = this.parentNode;
+					var isActive = parentLi.classList.contains("active");
+
+					// Close all details tags
+					closeAllDetails();
+
+					closeAllDropdowns();
+
+					if (!isActive) {
+						parentLi.classList.add("active");
+						toggle.style.color = "green"; // Set color to red when dropdown is active
+					} else {
+						toggle.style.color = ""; // Set color to normal when dropdown is closed
+					}
+				});
+			});
+
+			document.addEventListener("click", function (event) {
+				if (!event.target.closest("nav")) {
+					closeAllDetails();
+					closeAllDropdowns();
+				}
+			});
+
+			function closeAllDetails() {
+				var allDetailsTags = document.querySelectorAll("details[open]");
+				allDetailsTags.forEach(function (detailsTag) {
+					detailsTag.removeAttribute("open");
+				});
+			}
+
+			function closeAllDropdowns() {
+				dropdownToggles.forEach(function (toggle) {
+					var parentLi = toggle.parentNode;
+					parentLi.classList.remove("active");
+					toggle.style.color = ""; // Set color to normal when dropdown is closed
+				});
+			}
+
+			var detailsTags = document.querySelectorAll("details");
+			detailsTags.forEach(function (detailsTag) {
+				detailsTag.addEventListener("toggle", function () {
+					if (detailsTag.open) {
+						closeOtherDetails(detailsTag);
+					}
+				});
+			});
+
+			function closeOtherDetails(currentDetails) {
+				detailsTags.forEach(function (detailsTag) {
+					if (detailsTag !== currentDetails && detailsTag.open) {
+						detailsTag.removeAttribute("open");
+					}
+				});
+			}
+		});
+	</script>
+</body>
+
+</html>

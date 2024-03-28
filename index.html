@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>IT Department - BEC</title>
+	<link rel="icon" href="images/beclogo.png" type="image/jpeg" sizes="32x32 48x48">
+	<link rel="stylesheet" href="css/layouts/banner.css">
+
+
+</head>
+
+<body>
+	<img id="banner" src="images/banner.jpg" alt="Banner" />
+	<!--<H3 id="dept-name">Department Of Information Technology</H3>-->
+	<div th:replace="~{includes/layouts/headerTable :: headerTable}"></div>
+	<h1>About The Department</h1>
+	<hr>
+	<div th:replace="~{includes/layouts/about :: about}"></div>
+
+	<!-- <div  th:replace="~{includes/layouts/main/slider :: slider}"></div>
+		<div id="toggle-window" class="toggle-window-container" style="display: none;"> </div>
+	
+-->
+	<div th:replace="~{includes/layouts/main :: main}"></div>
+	<div th:replace="~{includes/layouts/aboutYears :: aboutYears}"></div>
+
+
+	
+
+	<div th:replace="~{includes/layouts/footer :: footer}"></div>
+</body>
+
+</html>
